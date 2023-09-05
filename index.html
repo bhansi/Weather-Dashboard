@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Weather Dashboard</title>
+
+        <!-- Including Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     </head>
     <body>
-        <header>
+        <header class="text-bg-primary p-3">
             <h1>Weather Dashboard</h1>
         </header>
-        <main>
-            <aside>
-                <h2>Search for a City:</h2>
-                <input type="text" id="txtCity">
-                <button>Search</button>
-                
-                <div id="divCities"></div>
-            </aside>
-            <section>
-                <div id="divWeatherToday"></div>
-            </section>
-        </main>
+        <div class="container-fluid p-3 border">
+            <main class="row">
+                <aside class="col-3 d-flex flex-column">
+                    <h2 class="mb-3">Search for a City:</h2>
+                    <input type="text" id="txtCity" class="form-control mb-3">
+                    <button class="btn btn-primary mb-3">Search</button>
+                    
+                    <div id="divCities"></div>
+                </aside>
+                <section class="col-9">
+                    <div id="divWeatherToday"></div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Including Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     </body>
 </html>
