@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Weather Dashboard</title>
+        <title>Canadian Weather Dashboard</title>
 
         <!-- Including Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -14,9 +14,9 @@
         <div class="container-fluid p-3 border">
             <main class="row">
                 <aside class="col-3 d-flex flex-column">
-                    <h2 class="mb-3">Search for a City:</h2>
-                    <input type="text" id="txtCity" class="form-control mb-3">
-                    <button class="btn btn-primary mb-3">Search</button>
+                    <h2 class="mb-3">Search for a City (city, province/territory):</h2>
+                    <input type="text" id="txtCity" class="form-control mb-3" placeholder="Toronto, ON">
+                    <button class="btn btn-primary mb-3" id="btnSearch">Search</button>
                     
                     <div id="divCities"></div>
                 </aside>
