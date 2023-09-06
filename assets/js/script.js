@@ -44,6 +44,12 @@ function displayWeatherToday(weather) {
     let header = $("<h3>");
     header.text(`${city} (${formatDate(weather.dt_txt)})`);
 
+    let icon = $("<img>");
+    icon.attr("alt", "Weather icon.");
+    icon.attr("src", `https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`);
+    icon.addClass("img-icon");
+    header.append(icon);
+
     let temp = $("<p>");
     temp.text(`Temp: ${weather.main.temp}°C`);
 
@@ -67,6 +73,11 @@ function displayWeatherFuture(weather) {
     let temp = $("<p>");
     temp.text(`Temp: ${weather.main.temp}°C`);
 
+    let icon = $("<img>");
+    icon.attr("alt", "Weather icon.");
+    icon.attr("src", `https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`);
+    icon.addClass("img-icon");
+
     let wind = $("<p>");
     wind.text(`Wind: ${weather.wind.speed} KPH`)
 
@@ -78,6 +89,7 @@ function displayWeatherFuture(weather) {
     date.text(formatDate(weather.dt_txt));
 
     card.append(date);
+    card.append(icon);
     card.append(temp);
     card.append(wind);
     card.append(humidity);
