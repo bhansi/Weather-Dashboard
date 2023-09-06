@@ -68,25 +68,25 @@ function displayWeatherToday(weather) {
 
 function displayWeatherFuture(weather) {
     let card = $("<div>");
-    card.addClass("card p-3");
+    card.addClass("card p-3 bg-dark text-light");
 
-    let temp = $("<p>");
-    temp.text(`Temp: ${weather.main.temp}°C`);
+    let date = $("<p>");
+    date.addClass("fw-bold");
+    date.text(formatDate(weather.dt_txt));
 
     let icon = $("<img>");
     icon.attr("alt", "Weather icon.");
     icon.attr("src", `https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`);
     icon.addClass("img-icon");
 
+    let temp = $("<p>");
+    temp.text(`Temp: ${weather.main.temp}°C`);
+
     let wind = $("<p>");
     wind.text(`Wind: ${weather.wind.speed} KPH`)
 
     let humidity = $("<p>");
     humidity.text(`Humidity: ${weather.main.humidity}%`);
-
-    let date = $("<p>");
-    date.addClass("fw-bold");
-    date.text(formatDate(weather.dt_txt));
 
     card.append(date);
     card.append(icon);
@@ -98,8 +98,8 @@ function displayWeatherFuture(weather) {
 }
 
 function displayWeather(list) {
-    $("#divWeatherToday").html("");
-    $("#divWeatherFuture").html("");
+    $("#divWeatherToday").html("").show();
+    $("#divWeatherFuture").html("").show();
 
     displayWeatherToday(list[0]);
 
