@@ -14,14 +14,15 @@
         <div class="container-fluid p-3 border">
             <main class="row">
                 <aside class="col-3 d-flex flex-column">
-                    <h2 class="mb-3">Search for a City (city, province/territory):</h2>
+                    <h2 class="mb-3">Search for a City:</h2>
                     <input type="text" id="txtCity" class="form-control mb-3" placeholder="Toronto, ON">
                     <button class="btn btn-primary mb-3" id="btnSearch">Search</button>
                     
-                    <div id="divCities"></div>
+                    <div id="divSearchHistory"></div>
                 </aside>
                 <section class="col-9">
-                    <div id="divWeatherToday"></div>
+                    <div id="divWeatherToday" class="border"></div>
+                    <div id="divWeatherFuture" class="d-flex flex-row justify-content-between border"></div>
                 </section>
             </main>
         </div>

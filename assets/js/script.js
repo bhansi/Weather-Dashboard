@@ -36,12 +36,81 @@ let provinces = {
     ]
 }
 
+function formatDate(date) {
+    return new Date(date).toLocaleDateString("en-US");
+}
+
+function displayWeatherToday(weather) {
+    let header = $("<h3>");
+    header.text(`${city} (${formatDate(weather.dt_txt)})`);
+
+    let temp = $("<p>");
+    temp.text(`Temp: ${weather.main.temp}°C`);
+
+    let wind = $("<p>");
+    wind.text(`Wind: ${weather.wind.speed} KPH`)
+
+    let humidity = $("<p>");
+    humidity.text(`Humidity: ${weather.main.humidity}%`);
+
+    let div = $("#divWeatherToday");
+    div.append(header);
+    div.append(temp);
+    div.append(wind);
+    div.append(humidity);
+}
+
+function displayWeatherFuture(weather) {
+    let card = $("<div>");
+    card.addClass("card p-3");
+
+    let temp = $("<p>");
+    temp.text(`Temp: ${weather.main.temp}°C`);
+
+    let wind = $("<p>");
+    wind.text(`Wind: ${weather.wind.speed} KPH`)
+
+    let humidity = $("<p>");
+    humidity.text(`Humidity: ${weather.main.humidity}%`);
+
+    let date = $("<p>");
+    date.addClass("fw-bold");
+    date.text(formatDate(weather.dt_txt));
+
+    card.append(date);
+    card.append(temp);
+    card.append(wind);
+    card.append(humidity);
+
+    $("#divWeatherFuture").append(card);
+}
+
+function displayWeather(list) {
+    $("#divWeatherToday").html("");
+    $("#divWeatherFuture").html("");
+
+    displayWeatherToday(list[0]);
+
+    let weatherIndex = 1;
+    for(let i = 1; i <= 5; i++) {
+        let futureDay = new Date();
+        futureDay = formatDate(futureDay.setDate(futureDay.getDate() + i));
+
+        for(; weatherIndex < list.length; weatherIndex++) {
+            if(futureDay === formatDate(list[weatherIndex].dt_txt)) {
+                displayWeatherFuture(list[weatherIndex]);
+                break;
+            }
+        }
+    }
+}
+
 function locationURL() {
     return `http://api.openweathermap.org/geo/1.0/direct?q=${city},${provinces.prov_long[provinces.prov_short.indexOf(province)]},ca&limit=3&appid=a61ff8fd83371ffd07303c4b2d8ad72e`
 }
 
 function weatherURL() {
-    return `http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=a61ff8fd83371ffd07303c4b2d8ad72e`;
+    return `http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=a61ff8fd83371ffd07303c4b2d8ad72e`;
 }
 
 function getWeather() {
@@ -49,6 +118,7 @@ function getWeather() {
         if(response.ok) {
             response.json().then(function(data) {
                 console.log(data);
+                displayWeather(data.list);
             });
         }
         else {
@@ -65,7 +135,7 @@ function getLocation() {
                     console.log(data);
                     let i = 0;
                     for(; i < data.length; i++) {
-                        if(data[i].name.toLowerCase() === city) {
+                        if(data[i].name === city) {
                             console.log(data[i].name);
                             console.log(i);
                             break;
@@ -86,7 +156,7 @@ function getLocation() {
     });
 }
 
-function displayWeather() {
+function callAPI() {
     getLocation();
 }
 
@@ -94,11 +164,11 @@ $("#btnSearch").on("click", function() {
     let location = $("#txtCity").val();
     if(location.includes(",")) {
         location = location.split(",");
-        city = location[0].trim().toLowerCase();
+        city = location[0].trim().charAt(0).toUpperCase() + location[0].trim().slice(1).toLowerCase();
         province = location[1].trim().toUpperCase();
         console.log(city);
         console.log(province);
-        displayWeather();
+        callAPI();
     }
     else {
         $("#txtCity").val("Try again.");
