@@ -19,13 +19,14 @@
                     <input type="text" id="txtCity" class="form-control mb-3" placeholder="Toronto, ON">
                     <button class="btn btn-primary mb-3" id="btnSearch">Search</button>
                     
-                    <div id="divSearchHistory"></div>
+                    <div id="divSearchHistory" class="d-grid gap-2">
+                        <button class="btn btn-danger mb-3">Delete Search History</button>
+                    </div>
                 </aside>
                 <section class="col-9">
                     <div id="divWeatherToday" class="bg-info mb-3 p-3" style="display: none;"></div>
-                    <div id="divWeatherFuture" class="d-flex flex-row justify-content-between" style="display: none;">
-                        <p>5-Day Forecast</p>
-                    </div>
+                    <h3 id="headingWeatherFuture" style="display: none;">5 day forecast:</h3>
+                    <div id="divWeatherFuture" class="d-flex flex-row justify-content-between" style="display: none;"></div>
                 </section>
             </main>
         </div>

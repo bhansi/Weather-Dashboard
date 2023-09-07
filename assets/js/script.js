@@ -36,13 +36,15 @@ let provinces = {
     ]
 }
 
+let searchHistory = [];
+
 function formatDate(date) {
     return new Date(date).toLocaleDateString("en-US");
 }
 
 function displayWeatherToday(weather) {
     let header = $("<h3>");
-    header.text(`${city} (${formatDate(weather.dt_txt)})`);
+    header.text(`${city} (${formatDate(weather.dt * 1000)})`);
 
     let icon = $("<img>");
     icon.attr("alt", "Weather icon.");
@@ -100,8 +102,7 @@ function displayWeatherFuture(weather) {
 function displayWeather(list) {
     $("#divWeatherToday").html("").show();
     $("#divWeatherFuture").html("").show();
-
-    displayWeatherToday(list[0]);
+    $("#headingWeatherFuture").show();
 
     let weatherIndex = 1;
     for(let i = 1; i <= 5; i++) {
@@ -121,12 +122,27 @@ function locationURL() {
     return `http://api.openweathermap.org/geo/1.0/direct?q=${city},${provinces.prov_long[provinces.prov_short.indexOf(province)]},ca&limit=3&appid=a61ff8fd83371ffd07303c4b2d8ad72e`
 }
 
-function weatherURL() {
+function weatherTodayURL() {
+    return `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=a61ff8fd83371ffd07303c4b2d8ad72e`;
+}
+
+function weatherFutureURL() {
     return `http://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=a61ff8fd83371ffd07303c4b2d8ad72e`;
 }
 
 function getWeather() {
-    fetch(weatherURL()).then(function(response) {
+    fetch(weatherTodayURL()).then(function(response) {
+        if(response.ok) {
+            response.json().then(function(data) {
+                console.log(data);
+                displayWeatherToday(data);
+            });
+        }
+        else {
+            $("#txtCity").val("Error retrieving weather data.");
+        }
+    });
+    fetch(weatherFutureURL()).then(function(response) {
         if(response.ok) {
             response.json().then(function(data) {
                 console.log(data);
@@ -155,6 +171,9 @@ function getLocation() {
                     }
                     latitude = data[i].lat;
                     longitude = data[i].lon;
+
+                    searchHistory.push(`${city}, ${province}`);
+                    console.log(searchHistory);
                     getWeather();
                 }
                 else {
