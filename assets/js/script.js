@@ -227,6 +227,14 @@ $("#btnSearch").on("click", function() {
     }
 });
 
+$("#btnDeleteSearchHistory").on("click", function() {
+    searchHistory = [];
+    $("#divSearchHistoryButtons").html("");
+    $("#divWeatherToday").html("").hide();
+    $("#headingWeatherFuture").hide();
+    $("#divWeatherFuture").html("").hide();
+});
+
 
 // let apiKey = "a61ff8fd83371ffd07303c4b2d8ad72e";
 // let url = `http://api.openweathermap.org/geo/1.0/direct?q=dartmouth,ca&limit=3&appid=${apiKey}`;
