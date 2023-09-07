@@ -43,6 +43,8 @@ function formatDate(date) {
 }
 
 function displayWeatherToday(weather) {
+    $("#divWeatherToday").html("").show();
+
     let header = $("<h3>");
     header.text(`${city} (${formatDate(weather.dt * 1000)})`);
 
@@ -100,7 +102,6 @@ function displayWeatherFuture(weather) {
 }
 
 function displayWeather(list) {
-    $("#divWeatherToday").html("").show();
     $("#divWeatherFuture").html("").show();
     $("#headingWeatherFuture").show();
 
@@ -142,6 +143,7 @@ function getWeather() {
             $("#txtCity").val("Error retrieving weather data.");
         }
     });
+
     fetch(weatherFutureURL()).then(function(response) {
         if(response.ok) {
             response.json().then(function(data) {
@@ -172,8 +174,8 @@ function getLocation() {
                     latitude = data[i].lat;
                     longitude = data[i].lon;
 
-                    searchHistory.push(`${city}, ${province}`);
                     console.log(searchHistory);
+                    updateSearchHistory();
                     getWeather();
                 }
                 else {
@@ -189,6 +191,25 @@ function getLocation() {
 
 function callAPI() {
     getLocation();
+}
+
+function updateSearchHistory() {
+    let location = `${city}, ${province}`;
+    if(!searchHistory.includes(location)) {
+        searchHistory.push(location);
+        
+        let searchHistoryButton = $("<button>");
+        searchHistoryButton.addClass("btn btn-secondary");
+        searchHistoryButton.text(location);
+        searchHistoryButton.on("click", function() {
+            let location = this.innerHTML.split(", ");
+            city = location[0];
+            province = location[1];
+            callAPI();
+        });
+
+        $("#divSearchHistoryButtons").append(searchHistoryButton);
+    }
 }
 
 $("#btnSearch").on("click", function() {
