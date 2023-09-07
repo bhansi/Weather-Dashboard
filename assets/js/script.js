@@ -2,6 +2,7 @@ let city;
 let province;
 let latitude;
 let longitude;
+let isHistoryDeleted = true;
 
 let provinces = {
     prov_long: [
@@ -37,6 +38,33 @@ let provinces = {
 }
 
 let searchHistory = [];
+
+function retrieveSearchHistory() {
+    let storedSearchHistory = localStorage.getItem("searchHistory");
+    if(!storedSearchHistory) { return; }
+
+    isHistoryDeleted = false;
+    $("#btnDeleteSearchHistory").show();
+    $("hr").show();
+
+    searchHistory = JSON.parse(storedSearchHistory);
+
+    for(let i = 0; i < searchHistory.length; i++) {
+        let searchHistoryButton = $("<button>");
+        searchHistoryButton.addClass("btn btn-secondary");
+        searchHistoryButton.text(searchHistory[i]);
+        searchHistoryButton.on("click", function() {
+            let location = this.innerHTML.split(", ");
+            city = location[0];
+            province = location[1];
+            callAPI();
+        });
+
+        $("#divSearchHistoryButtons").append(searchHistoryButton);
+    }
+}
+
+retrieveSearchHistory();
 
 function formatDate(date) {
     return new Date(date).toLocaleDateString("en-US");
@@ -195,6 +223,13 @@ function callAPI() {
 
 function updateSearchHistory() {
     let location = `${city}, ${province}`;
+    if(isHistoryDeleted) {
+        isHistoryDeleted = false;
+        $("#btnDeleteSearchHistory").show();
+        $("hr").show();
+
+    }
+
     if(!searchHistory.includes(location)) {
         searchHistory.push(location);
         
@@ -207,6 +242,8 @@ function updateSearchHistory() {
             province = location[1];
             callAPI();
         });
+
+        localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
 
         $("#divSearchHistoryButtons").append(searchHistoryButton);
     }
@@ -229,6 +266,12 @@ $("#btnSearch").on("click", function() {
 
 $("#btnDeleteSearchHistory").on("click", function() {
     searchHistory = [];
+    localStorage.setItem("searchHistory", searchHistory);
+
+    isHistoryDeleted = true;
+
+    $("#btnDeleteSearchHistory").hide();
+    $("hr").hide();
     $("#divSearchHistoryButtons").html("");
     $("#divWeatherToday").html("").hide();
     $("#headingWeatherFuture").hide();
