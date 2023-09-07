@@ -2,7 +2,7 @@
 
 ## Descripton
 
-This website is a weather dashboard that retrieves data from the ![Open Weather Map API](https://openweathermap.org/).
+This website is a weather dashboard that retrieves data from the [Open Weather Map API](https://openweathermap.org/).
 It is set to display Canadian weather data but can be set to display weather data for different countries.
 
 Each successful search displays the current weather data and weather data for 5 days in the future.
