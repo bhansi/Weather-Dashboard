@@ -252,7 +252,13 @@ $("#btnSearch").on("click", function() {
     if(location.includes(",")) {
         $("#txtCity").val("");
         location = location.split(",");
-        city = location[0].trim().charAt(0).toUpperCase() + location[0].trim().slice(1).toLowerCase();
+        cityTemp = location[0].trim().split(" ");
+        city = "";
+        for(let i = 0; i < cityTemp.length; i++) {
+            cityTemp[i] = cityTemp[i].charAt(0).toUpperCase() + cityTemp[i].slice(1).toLowerCase();
+            city += " " + cityTemp[i];
+        }
+        city = city.trim();
         province = location[1].trim().toUpperCase();
         callAPI();
     }
