@@ -163,7 +163,6 @@ function getWeather() {
     fetch(weatherTodayURL()).then(function(response) {
         if(response.ok) {
             response.json().then(function(data) {
-                console.log(data);
                 displayWeatherToday(data);
             });
         }
@@ -175,7 +174,6 @@ function getWeather() {
     fetch(weatherFutureURL()).then(function(response) {
         if(response.ok) {
             response.json().then(function(data) {
-                console.log(data);
                 displayWeather(data.list);
             });
         }
@@ -190,19 +188,15 @@ function getLocation() {
         if(response.ok) {
             response.json().then(function(data) {
                 if(data.length > 0) {
-                    console.log(data);
                     let i = 0;
                     for(; i < data.length; i++) {
                         if(data[i].name === city) {
-                            console.log(data[i].name);
-                            console.log(i);
                             break;
                         }
                     }
                     latitude = data[i].lat;
                     longitude = data[i].lon;
 
-                    console.log(searchHistory);
                     updateSearchHistory();
                     getWeather();
                 }
@@ -249,18 +243,21 @@ function updateSearchHistory() {
     }
 }
 
+$("#txtCity").on("focus", function() {
+    $("#txtCity").val("");
+});
+
 $("#btnSearch").on("click", function() {
     let location = $("#txtCity").val();
     if(location.includes(",")) {
+        $("#txtCity").val("");
         location = location.split(",");
         city = location[0].trim().charAt(0).toUpperCase() + location[0].trim().slice(1).toLowerCase();
         province = location[1].trim().toUpperCase();
-        console.log(city);
-        console.log(province);
         callAPI();
     }
     else {
-        $("#txtCity").val("Try again.");
+        $("#txtCity").val("Format: <city>, <province/territory>");
     }
 });
 
@@ -277,37 +274,3 @@ $("#btnDeleteSearchHistory").on("click", function() {
     $("#headingWeatherFuture").hide();
     $("#divWeatherFuture").html("").hide();
 });
-
-
-// let apiKey = "a61ff8fd83371ffd07303c4b2d8ad72e";
-// let url = `http://api.openweathermap.org/geo/1.0/direct?q=dartmouth,ca&limit=3&appid=${apiKey}`;
-// let lat;
-// let lon;
-
-// function getLocation() {
-//     fetch(url).then(function(response) {
-//         if(response.ok) {
-//             response.json().then(function(data) {
-//                 console.log(data);
-//                 lat = data[0].lat;
-//                 lon = data[0].lon;
-//                 console.log(lat);
-//                 console.log(lon);
-//                 getWeather();
-//             });
-//         }
-//     });
-// }
-
-// function getWeather() {
-//     url = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-//     fetch(url).then(function(response) {
-//         if(response.ok) {
-//             response.json().then(function(data) {
-//                 console.log(data);
-//             });
-//         }
-//     });
-// }
-
-// getLocation();
