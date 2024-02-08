@@ -1,3 +1,5 @@
+console.log(vars.API_KEY);
+
 let city;
 let province;
 let latitude;
