@@ -1,4 +1,4 @@
-console.log(github.vars.API_KEY);
+console.log(process.env.API_KEY);
 
 let city;
 let province;
@@ -150,15 +150,15 @@ function displayWeather(list) {
 }
 
 function locationURL() {
-    return `https://api.openweathermap.org/geo/1.0/direct?q=${city},${provinces.prov_long[provinces.prov_short.indexOf(province)]},ca&limit=3&appid=${github.vars.API_KEY}`
+    return `https://api.openweathermap.org/geo/1.0/direct?q=${city},${provinces.prov_long[provinces.prov_short.indexOf(province)]},ca&limit=3&appid=${process.env.API_KEY}`
 }
 
 function weatherTodayURL() {
-    return `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${github.vars.API_KEY}`;
+    return `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${process.env.API_KEY}`;
 }
 
 function weatherFutureURL() {
-    return `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${github.vars.API_KEY}`;
+    return `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${process.env.API_KEY}`;
 }
 
 function getWeather() {
