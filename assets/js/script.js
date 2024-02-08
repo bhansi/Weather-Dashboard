@@ -148,15 +148,15 @@ function displayWeather(list) {
 }
 
 function locationURL() {
-    return `https://api.openweathermap.org/geo/1.0/direct?q=${city},${provinces.prov_long[provinces.prov_short.indexOf(province)]},ca&limit=3`
+    return `https://api.openweathermap.org/geo/1.0/direct?q=${city},${provinces.prov_long[provinces.prov_short.indexOf(province)]},ca&limit=3&appid=${vars.API_KEY}`
 }
 
 function weatherTodayURL() {
-    return `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric`;
+    return `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${vars.API_KEY}`;
 }
 
 function weatherFutureURL() {
-    return `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric`;
+    return `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${vars.API_KEY}`;
 }
 
 function getWeather() {
