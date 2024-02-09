@@ -1,5 +1,3 @@
-console.log(process.env.API_KEY);
-
 let city;
 let province;
 let latitude;
@@ -40,6 +38,8 @@ let provinces = {
 }
 
 let searchHistory = [];
+
+const API_KEY = 'a61ff8fd83371ffd07303c4b2d8ad72e';
 
 function retrieveSearchHistory() {
     let storedSearchHistory = localStorage.getItem("searchHistory");
@@ -150,15 +150,15 @@ function displayWeather(list) {
 }
 
 function locationURL() {
-    return `https://api.openweathermap.org/geo/1.0/direct?q=${city},${provinces.prov_long[provinces.prov_short.indexOf(province)]},ca&limit=3&appid=${process.env.API_KEY}`
+    return `https://api.openweathermap.org/geo/1.0/direct?q=${city},${provinces.prov_long[provinces.prov_short.indexOf(province)]},ca&limit=3&appid=${API_KEY}`
 }
 
 function weatherTodayURL() {
-    return `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${process.env.API_KEY}`;
+    return `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`;
 }
 
 function weatherFutureURL() {
-    return `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${process.env.API_KEY}`;
+    return `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`;
 }
 
 function getWeather() {
